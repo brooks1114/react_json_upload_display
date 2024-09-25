@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './Home'; // Home page with UI test automation image
 import BusinessRulesDictionary from './BusinessRulesDictionary'; // New Business Rules Dictionary page
 import TestResultLogs from './TestResultLogs'; // Test Result Logs page
+import TestPlanGenerator from './TestPlanGenerator';
 import './App.css';
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
             </li>
             <li>
               <Link to="/test-result-logs">Test Result Logs</Link>
+            </li>
+            <li>
+              <Link to="/test-plan-generator">Test Plan Generator</Link>
             </li>
           </ul>
         </nav>
@@ -58,6 +62,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/business-rules-dictionary" element={<BusinessRulesDictionary />} />
           <Route path="/test-result-logs" element={<TestResultLogs />} />
+          <Route path="/test-plan-generator" element={<TestPlanGenerator />} />
         </Routes>
       </div>
     </Router>
