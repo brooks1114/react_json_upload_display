@@ -97,9 +97,9 @@ function TestPlanGenerator() {
             <table border="1" cellPadding="10" cellSpacing="0" style={{ width: '100%', tableLayout: 'auto' }}>
                 <thead>
                     <tr>
-                        <th>Page</th>
-                        <th>UI Field</th>
-                        <th>Input</th>
+                        <th>First Property (Top Level)</th>
+                        <th>Nested Property (Second Level)</th>
+                        <th>Input Type</th>
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>
@@ -132,7 +132,7 @@ function TestPlanGenerator() {
                         type="button"
                         onClick={() => document.querySelector('input[type="file"]').click()}
                     >
-                        Upload Template to Generate Test Plan
+                        Generate Test Plan Template
                     </button>
                 </label>
 
@@ -145,7 +145,7 @@ function TestPlanGenerator() {
             {/* Display the table if the JSON data is available */}
             {jsonData && (
                 <div>
-                    <h3>Your Generated Test Plan</h3>
+                    <h3>Generated Test Plan Template</h3>
                     {renderTable()}
                 </div>
             )}

@@ -141,6 +141,16 @@ function BusinessRulesDictionary() {
             <h2>Business Rules Dictionary</h2>
             <input type="file" accept=".json" onChange={handleFileUpload} />
 
+            {/* New div for buttons */}
+            <div style={{ marginTop: '20px' }}>
+                <button onClick={applyFilters} style={{ marginRight: '10px' }}>
+                    Apply Filters
+                </button>
+                <button onClick={clearFilters}>
+                    Clear Filters
+                </button>
+            </div>
+
             {/* Always display the table and buttons */}
             {visibleColumns.length > 0 && (
                 <div>
@@ -211,13 +221,6 @@ function BusinessRulesDictionary() {
                         </tbody>
                     </table>
 
-                    {/* Buttons to apply and clear filters */}
-                    <div style={{ marginTop: '10px' }}>
-                        <button onClick={applyFilters} style={{ marginRight: '10px' }}>
-                            Apply Filters
-                        </button>
-                        <button onClick={clearFilters}>Clear Filters</button>
-                    </div>
                 </div>
             )}
         </div>

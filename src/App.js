@@ -4,31 +4,33 @@ import Home from './Home'; // Home page with UI test automation image
 import BusinessRulesDictionary from './BusinessRulesDictionary'; // New Business Rules Dictionary page
 import TestResultLogs from './TestResultLogs'; // Test Result Logs page
 import TestPlanGenerator from './TestPlanGenerator';
+import { GlobalStateProvider } from './GlobalState'; // Import the StateProvider
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/business-rules-dictionary">Business Rules Dictionary</Link>
-            </li>
-            <li>
-              <Link to="/test-result-logs">Test Result Logs</Link>
-            </li>
-            <li>
-              <Link to="/test-plan-generator">Test Plan Generator</Link>
-            </li>
-          </ul>
-        </nav>
+    <GlobalStateProvider>
+      <Router>
+        <div className="App">
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/business-rules-dictionary">Business Rules Dictionary</Link>
+              </li>
+              <li>
+                <Link to="/test-result-logs">Test Result Logs</Link>
+              </li>
+              <li>
+                <Link to="/test-plan-generator">Test Plan Generator</Link>
+              </li>
+            </ul>
+          </nav>
 
-        {/* Apply CSS for the navigation */}
-        <style jsx="true">{`
+          {/* Apply CSS for the navigation */}
+          <style jsx="true">{`
           nav {
             background-color: #2c3e50;
             padding: 10px;
@@ -58,14 +60,15 @@ function App() {
           }
         `}</style>
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/business-rules-dictionary" element={<BusinessRulesDictionary />} />
-          <Route path="/test-result-logs" element={<TestResultLogs />} />
-          <Route path="/test-plan-generator" element={<TestPlanGenerator />} />
-        </Routes>
-      </div>
-    </Router>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/business-rules-dictionary" element={<BusinessRulesDictionary />} />
+            <Route path="/test-result-logs" element={<TestResultLogs />} />
+            <Route path="/test-plan-generator" element={<TestPlanGenerator />} />
+          </Routes>
+        </div>
+      </Router>
+    </GlobalStateProvider>
   );
 }
 
