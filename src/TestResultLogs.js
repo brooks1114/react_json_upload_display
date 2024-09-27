@@ -81,8 +81,8 @@ function TestResultLogs() {
     const performQueryExpected = () => {
         const queryResults = fileData.filter(item => item.businessRule === "2" && item.jurisdiction === "FL");
         if (queryResults.length === 0) {
-            setNoResults(true);
             setShowModal(true);
+            setNoResults(true);
         } else {
             setQueryResult(queryResults);
             setShowModal(true);
@@ -93,8 +93,8 @@ function TestResultLogs() {
     const performQueryNotExpected = () => {
         const queryResults = fileData.filter(item => item.businessRule === "2" && item.jurisdiction !== "FL");
         if (queryResults.length === 0) {
-            setNoResults(true);
             setShowModal(true);
+            setNoResults(true);
         } else {
             setQueryResult(queryResults);
             setShowModal(true);
@@ -105,6 +105,68 @@ function TestResultLogs() {
     const closeModal = () => {
         setShowModal(false);
         setNoResults(false); // Reset the no results flag
+    };
+
+    // Generate all possible columns from query results
+    const getAllColumnsFromQuery = (queryResult) => {
+        const columns = new Set();
+        queryResult.forEach((item) => {
+            Object.keys(item).forEach((key) => columns.add(key));
+        });
+        return Array.from(columns);
+    };
+
+    // Render the query results table
+    const renderQueryTable = () => {
+        if (!queryResult && !noResults) return null;
+
+        const columns = getAllColumnsFromQuery(queryResult);
+
+        return (
+            <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                <table border="1" cellPadding="10" cellSpacing="0" style={{ width: '100%', tableLayout: 'auto' }}>
+                    <thead>
+                        <tr>
+                            {columns.map((column) => (
+                                <th key={column}>{column}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {queryResult.map((row, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {columns.map((column) => (
+                                    <td key={column}>{row[column] || ''}</td> /* { Display empty cell if the property doesn't exist in the row  }*/
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    };
+
+    // Render the modal with query results
+    const renderModal = () => {
+        if (!queryResult && !noResults) return null;
+
+        return (
+            <div style={{ position: 'fixed', top: '20%', left: '30%', width: '40%', padding: '20px', backgroundColor: 'white', border: '1px solid #ccc', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+                {noResults ? (
+                    <div>
+                        <h3>No Results Found</h3>
+                        <button onClick={closeModal}>Close</button>
+                    </div>
+                ) : (
+                    <div>
+                        <h3>Query Results</h3>
+                        <p>Count of results: {queryResult.length}</p>
+                        {renderQueryTable()} {/* Render the query table with results */}
+                        <button onClick={closeModal}>Close</button>
+                    </div>
+                )}
+            </div>
+        );
     };
 
     // Render the table dynamically based on the properties of the objects
@@ -137,52 +199,12 @@ function TestResultLogs() {
                     {filteredData.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {columns.map((column) => (
-                                <td key={column}>{row[column]}</td>
+                                <td key={column}>{row[column] || ''}</td>
                             ))}
                         </tr>
                     ))}
                 </tbody>
             </table>
-        );
-    };
-
-    // Render the modal with query results
-    const renderModal = () => {
-        if (!queryResult && !noResults) return null;
-
-        return (
-            <div style={{ position: 'fixed', top: '20%', left: '30%', width: '40%', padding: '20px', backgroundColor: 'white', border: '1px solid #ccc', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-                {noResults ? (
-                    <div>
-                        <h3>No Results Found</h3>
-                        <button onClick={closeModal}>Close</button>
-                    </div>
-                ) : (
-                    <div>
-                        <h3>Query Results</h3>
-                        <p>Count of results: {queryResult.length}</p>
-                        <table border="1" cellPadding="10" cellSpacing="0" style={{ width: '100%', tableLayout: 'auto' }}>
-                            <thead>
-                                <tr>
-                                    {Object.keys(queryResult[0]).map((key) => (
-                                        <th key={key}>{key}</th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {queryResult.map((result, idx) => (
-                                    <tr key={idx}>
-                                        {Object.keys(result).map((key) => (
-                                            <td key={key}>{result[key]}</td>
-                                        ))}
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <button onClick={closeModal}>Close</button>
-                    </div>
-                )}
-            </div>
         );
     };
 
